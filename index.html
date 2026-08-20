@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СНУ Сергинское</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Скевоморфизм в стиле Windows Vista / Aqua */
+        body {
+            background: #bce0fb url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23cbe7fc" width="100" height="100"/><circle cx="50" cy="50" r="40" fill="%23e3f3ff" opacity="0.4"/></svg>');
+            background-size: cover;
+            min-height: 100vh;
+            color: #1a365d;
+            font-family: "Segoe UI", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skeuo-box {
+            background: linear-gradient(to bottom, #ffffff 0%, #e6f2fd 50%, #cfe5fb 51%, #eaf3fe 100%);
+            border: 1px solid #7eaac7;
+            border-radius: 12px;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 2px rgba(0, 80, 150, 0.15),
+                0 6px 12px rgba(0, 40, 80, 0.25),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .skeuo-btn {
+            background: linear-gradient(to bottom, #6fb1fc 0%, #438edf 50%, #1d6ac8 51%, #2b7ee4 100%);
+            border: 1px solid #104a8e;
+            border-radius: 6px;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.2),
+                0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s ease;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .skeuo-btn:hover {
+            background: linear-gradient(to bottom, #83bcfe 0%, #539bef 50%, #2675d6 51%, #398af2 100%);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 90, 180, 0.3);
+            color: #ffffff;
+        }
+        .skeuo-btn:active {
+            background: linear-gradient(to bottom, #1d6ac8 0%, #2b7ee4 50%, #438edf 100%);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+            transform: translateY(1px);
+        }
+
+        .skeuo-btn-inactive {
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 50%, #dedede 51%, #f4f4f4 100%);
+            border: 1px solid #adadad;
+            border-radius: 6px;
+            color: #333333;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.1s ease;
+            cursor: pointer;
+        }
+        .skeuo-btn-inactive:hover {
+            background: linear-gradient(to bottom, #ffffff 0%, #fefefe 50%, #e8e8e8 51%, #f8f8f8 100%);
+            border-color: #7eb4ea;
+            color: #004080;
+        }
+
+        .skeuo-header {
+            background: linear-gradient(to bottom, #ffffff 0%, #d8edfc 40%, #b8defc 41%, #d0eafc 100%);
+            border-bottom: 2px solid #5b9bd5;
+            box-shadow: 0 4px 10px rgba(0, 50, 100, 0.2);
+        }
+
+        .skeuo-footer {
+            background: linear-gradient(to bottom, #d0eafc 0%, #b8defc 40%, #a4d2f8 100%);
+            border-top: 2px solid #7eaac7;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        .skeuo-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #111a2e;
+            border: 1px solid #4a6fa5;
+            border-radius: 4px;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+            cursor: pointer;
+        }
+        .skeuo-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #83bcfe 0%, #2b7ee4 100%);
+            border: 1px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+
+        .calc-btn {
+            background: linear-gradient(to bottom, #ffffff 0%, #e1effc 100%);
+            border: 1px solid #7eaac7;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #1a365d;
+            padding: 12px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .calc-btn:hover { background: #d0e7fc; }
+        .calc-btn:active { background: #b8defc; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка сайта -->
+    <header class="skeuo-header sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+            <a href="#" onclick="switchPage('home')" class="flex items-center gap-3 cursor-pointer group">
+                <img src="1000069322.jpg" alt="Логотип СНУ Сергинское" class="w-11 h-11 rounded-full object-cover border-2 border-blue-700 shadow-[0_2px_5px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform">
+                <span class="font-bold text-lg text-blue-950 tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">СНУ Сергинское</span>
+            </a>
+            <nav class="flex gap-2 flex-wrap">
+                <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 skeuo-btn text-xs md:text-sm">Главная</button>
+                <button onclick="switchPage('news')" id="nav-news" class="px-3 py-1.5 skeuo-btn-inactive text-xs md:text-sm">Новости</button>
+                <button onclick="switchPage('kids')" id="nav-kids" class="px-3 py-1.5 skeuo-btn-inactive text-xs md:text-sm">Для детей</button>
+                <button onclick="switchPage('adults')" id="nav-adults" class="px-3 py-1.5 skeuo-btn-inactive text-xs md:text-sm">Для взрослых (не 18+)</button>
+                <button onclick="switchPage('support')" id="nav-support" class="px-3 py-1.5 skeuo-btn-inactive text-xs md:text-sm">Техподдержка</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Главная страница -->
+        <section id="page-home" class="space-y-6">
+            <div class="skeuo-box rounded-2xl p-8 md:p-12 shadow-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+                <div class="space-y-4 text-center md:text-left flex-1 z-10">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-950 tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.9)]">Сообщество Независимых Участков</h1>
+                    <p class="text-blue-900 text-lg font-medium leading-relaxed drop-shadow-[0_1px_0_rgba(255,255,255,0.6)]">Добро пожаловать на официальный сайт СНУ Сергинское. Самые свежие новости, проекты и уютная цифровая экосистема в классическом скевоморфном стиле.</p>
+                    
+                    <!-- Кнопка списка улиц СНУ -->
+                    <div class="pt-2">
+                        <button onclick="toggleStreetsList()" class="px-6 py-3 skeuo-btn text-base shadow-lg flex items-center gap-2 mx-auto md:mx-0">
+                            <i id="streetsArrow" class="fa-solid fa-chevron-right text-xs transition-transform"></i>
+                            Список улиц СНУ
+                        </button>
+                        
+                        <!-- Выпадающий блок со списком улиц -->
+                        <div id="streetsDropdown" class="hidden mt-3 bg-[#e6f2fd] border-2 border-[#7eaac7] rounded-xl p-4 shadow-inner text-left max-w-md">
+                            <h4 class="font-bold text-blue-950 mb-2 border-b border-blue-300 pb-1 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-blue-600"></i> Город Ярославль, улицы СНУ:
+                            </h4>
+                            <ul class="space-y-2 text-sm text-blue-950 font-medium">
+                                <li class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-blue-200 shadow-xs">
+                                    <i class="fa-solid fa-road text-xs text-blue-500"></i> Улица Ляпинка
+                                </li>
+                                <li class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-blue-200 shadow-xs">
+                                    <i class="fa-solid fa-road text-xs text-blue-500"></i> Третья больничная улица
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-b from-white to-blue-100 rounded-full flex items-center justify-center p-4 border-2 border-blue-400 shadow-[inset_0_4px_8px_rgba(0,0,0,0.15),0_6px_15px_rgba(0,0,0,0.2)] overflow-hidden z-10">
+                    <img src="1000069322.jpg" alt="СНУ Сергинское" class="w-full h-full object-cover rounded-full shadow-inner border border-blue-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница новостей -->
+        <section id="page-news" class="hidden space-y-6">
+            <div class="border-b-2 border-blue-300 pb-3">
+                <h2 class="text-2xl font-bold text-blue-950 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Последние новости</h2>
+                <p class="text-blue-800 text-sm font-medium">Актуальные медиаматериалы и события сообщества</p>
+            </div>
+
+            <div class="skeuo-box rounded-2xl shadow-xl overflow-hidden max-w-3xl mx-auto border-2 border-blue-400">
+                
+                <!-- Чистый плеер без наложенного текста -->
+                <div class="relative bg-black flex flex-col justify-center items-center overflow-hidden border-b-2 border-blue-900">
+                    <video id="customVideo" preload="metadata" class="w-full max-h-[450px] object-contain cursor-pointer">
+                        <source src="lv_0_20260819134757 (video-converter.com).mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео тег.
+                    </video>
+
+                    <!-- Большая центральная глянцевая кнопка Play -->
+                    <div id="bigPlayBtn" class="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity cursor-pointer">
+                        <div class="w-20 h-20 bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 rounded-full flex items-center justify-center text-white text-3xl shadow-[0_8px_20px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.8)] border-2 border-sky-300 hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-play ml-1.5 drop-shadow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Панель управления плеера -->
+                    <div class="w-full bg-gradient-to-b from-[#1c2c47] to-[#0d1626] border-t border-[#4a6fa5] p-3 flex flex-col gap-2">
+                        <!-- Прогресс бар с заполняемой шкалой -->
+                        <div class="flex items-center gap-3">
+                            <input type="range" id="videoProgress" value="0" min="0" max="100" step="0.1" class="skeuo-range">
+                        </div>
+                        <div class="flex items-center justify-between text-white text-xs font-semibold">
+                            <div class="flex items-center gap-3">
+                                <button id="playPauseBtn" class="hover:text-sky-300 transition-colors w-6">
+                                    <i id="playPauseIcon" class="fa-solid fa-play text-base"></i>
+                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button id="muteBtn" class="hover:text-sky-300 transition-colors">
+                                        <i id="muteIcon" class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                    <input type="range" id="volumeBar" value="1" min="0" max="1" step="0.05" class="skeuo-range w-16 !h-2">
+                                </div>
+                                <span id="timeDisplay" class="text-blue-200">0:00 / 0:00</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="fullscreenBtn" class="hover:text-sky-300 transition-colors">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-3 bg-gradient-to-b from-blue-50 to-blue-100/60">
+                    <div class="flex items-center justify-between text-sm text-blue-900 border-b border-blue-200 pb-3">
+                        <span class="font-bold">Официальный выпуск</span>
+                        <time datetime="2026-08-19" class="font-medium text-blue-800">Дата публикации: 19 августа 2026 г.</time>
+                    </div>
+                    <p class="text-blue-950 text-base leading-relaxed font-medium">
+                        Свежий выпуск новостей СНУ Сергинское. Следите за обновлениями проектов и важными событиями сообщества!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница "Для детей" -->
+        <section id="page-kids" class="hidden space-y-6">
+            <div class="border-b-2 border-blue-300 pb-3 flex justify-between items-center flex-wrap gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-blue-950 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Уголок для детей</h2>
+                    <p class="text-blue-800 text-sm font-medium">Выбирайте мини-игру и развлекайтесь!</p>
+                </div>
+                <div id="kidsMenu" class="flex gap-2">
+                    <button onclick="openMiniGame('paint')" class="px-4 py-2 skeuo-btn text-xs md:text-sm">Рисовалка</button>
+                    <button onclick="openMiniGame('snake')" class="px-4 py-2 skeuo-btn-inactive text-xs md:text-sm">Змейка</button>
+                    <button onclick="openMiniGame('coloring')" class="px-4 py-2 skeuo-btn-inactive text-xs md:text-sm">Раскраска</button>
+                </div>
+            </div>
+
+            <!-- Контейнер мини-игр -->
+            <div class="skeuo-box rounded-2xl shadow-xl p-6 border-2 border-blue-400">
+                
+                <!-- 1. РИСОВАЛКА -->
+                <div id="game-paint" class="space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3 bg-white/70 p-3 rounded-xl border border-blue-200">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <label class="text-xs font-bold text-blue-950">Цвет:</label>
+                            <input type="color" id="paintColor" value="#1d6ac8" class="w-8 h-8 rounded cursor-pointer border border-blue-400">
+                            
+                            <label class="text-xs font-bold text-blue-950 ml-2">Инструмент:</label>
+                            <button onclick="setPaintTool('brush')" id="toolBrush" class="px-3 py-1 skeuo-btn text-xs">Кисть</button>
+                            <button onclick="setPaintTool('eraser')" id="toolEraser" class="px-3 py-1 skeuo-btn-inactive text-xs">Ластик</button>
+
+                            <label class="text-xs font-bold text-blue-950 ml-2">Размер:</label>
+                            <input type="range" id="paintSize" min="2" max="30" value="6" class="w-24 skeuo-range">
+                        </div>
+                        <button onclick="savePaint()" class="px-4 py-2 skeuo-btn text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i> Сохранить рисунок
+                        </button>
+                    </div>
+                    <div class="bg-white border-2 border-blue-400 rounded-xl overflow-hidden shadow-inner flex justify-center">
+                        <canvas id="paintCanvas" width="700" height="400" class="cursor-crosshair bg-white touch-none w-full max-w-full h-auto"></canvas>
+                    </div>
+                </div>
+
+                <!-- 2. ЗМЕЙКА -->
+                <div id="game-snake" class="hidden space-y-4 text-center">
+                    <div class="flex justify-between items-center bg-white/70 p-3 rounded-xl border border-blue-200">
+                        <span class="font-bold text-blue-950 text-sm">Счет: <span id="snakeScore">0</span></span>
+                        <button onclick="startSnake()" class="px-4 py-2 skeuo-btn text-xs">Начать / Заново</button>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-blue-500 rounded-xl overflow-hidden shadow-inner inline-block max-w-full">
+                        <canvas id="snakeCanvas" width="400" height="400" class="block mx-auto bg-black"></canvas>
+                    </div>
+                    <p class="text-xs text-blue-800 font-medium">Управление с помощью стрелок на клавиатуре</p>
+                </div>
+
+                <!-- 3. РАСКРАСКА -->
+                <div id="game-coloring" class="hidden space-y-4 text-center">
+                    <div id="coloringMenu" class="flex justify-center gap-3 flex-wrap">
+                        <button onclick="selectColoring(1)" class="px-4 py-2 skeuo-btn text-xs">Персонаж 1 (Робот)</button>
+                        <button onclick="selectColoring(2)" class="px-4 py-2 skeuo-btn-inactive text-xs">Персонаж 2 (Домик)</button>
+                        <button onclick="selectColoring(3)" class="px-4 py-2 skeuo-btn-inactive text-xs">Персонаж 3 (Машинка)</button>
+                    </div>
+                    <div class="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl border border-blue-200 flex-wrap">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <label class="text-xs font-bold text-blue-950">Выберите цвет краски:</label>
+                            <input type="color" id="colorPicker" value="#ff3366" class="w-8 h-8 rounded cursor-pointer border border-blue-400">
+                            <span class="text-xs text-blue-900">Зажимайте левую кнопку мыши и возите кистью по полупрозрачным участкам!</span>
+                        </div>
+                        <button onclick="saveColoring()" class="px-4 py-2 skeuo-btn text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i> Сохранить раскраску
+                        </button>
+                    </div>
+                    <div class="bg-white border-2 border-blue-400 rounded-xl overflow-hidden shadow-inner flex justify-center relative">
+                        <canvas id="coloringCanvas" width="500" height="400" class="cursor-crosshair bg-white touch-none"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Страница "Для взрослых (не 18+)" -->
+        <section id="page-adults" class="hidden space-y-6">
+            <div class="border-b-2 border-blue-300 pb-3 flex justify-between items-center flex-wrap gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-blue-950 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Для взрослых (не 18+)</h2>
+                    <p class="text-blue-800 text-sm font-medium">Полезные инструменты для работы и расчётов</p>
+                </div>
+                <div id="adultsMenu" class="flex gap-2">
+                    <button onclick="openAdultTool('calc')" class="px-4 py-2 skeuo-btn text-xs md:text-sm">Калькулятор</button>
+                    <button onclick="openAdultTool('tasks')" class="px-4 py-2 skeuo-btn-inactive text-xs md:text-sm">Планировщик задач</button>
+                </div>
+            </div>
+
+            <div class="skeuo-box rounded-2xl shadow-xl p-6 border-2 border-blue-400">
+                
+                <!-- 1. КАЛЬКУЛЯТОР -->
+                <div id="tool-calc" class="max-w-md mx-auto space-y-4">
+                    <div class="bg-white/80 border border-blue-300 rounded-xl p-4 shadow-inner">
+                        <div id="calcDisplay" class="w-full bg-white border-2 border-blue-400 rounded-lg p-3 text-right text-2xl font-bold text-blue-950 mb-4 h-14 flex items-center justify-end overflow-hidden shadow-inner">0</div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="calcClear()" class="calc-btn col-span-2 bg-red-100 hover:bg-red-200 text-red-700">Сброс (C)</button>
+                            <button onclick="calcAppend('/')" class="calc-btn">/</button>
+                            <button onclick="calcAppend('*')" class="calc-btn">*</button>
+                            
+                            <button onclick="calcAppend('7')" class="calc-btn">7</button>
+                            <button onclick="calcAppend('8')" class="calc-btn">8</button>
+                            <button onclick="calcAppend('9')" class="calc-btn">9</button>
+                            <button onclick="calcAppend('-')" class="calc-btn">-</button>
+                            
+                            <button onclick="calcAppend('4')" class="calc-btn">4</button>
+                            <button onclick="calcAppend('5')" class="calc-btn">5</button>
+                            <button onclick="calcAppend('6')" class="calc-btn">6</button>
+                            <button onclick="calcAppend('+')" class="calc-btn">+</button>
+                            
+                            <button onclick="calcAppend('1')" class="calc-btn">1</button>
+                            <button onclick="calcAppend('2')" class="calc-btn">2</button>
+                            <button onclick="calcAppend('3')" class="calc-btn">3</button>
+                            <button onclick="calcCalculate()" class="calc-btn row-span-2 bg-blue-500 hover:bg-blue-600 text-white" style="height: auto;">=</button>
+                            
+                            <button onclick="calcAppend('0')" class="calc-btn col-span-2">0</button>
+                            <button onclick="calcAppend('.')" class="calc-btn">.</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. ПЛАНИРОВЩИК ЗАДАЧ -->
+                <div id="tool-tasks" class="hidden space-y-4 max-w-2xl mx-auto">
+                    <div class="flex gap-2 flex-wrap">
+                        <input type="text" id="taskInput" placeholder="Введите новую задачу..." class="flex-grow skeuo-input px-4 py-2 border border-blue-400 rounded-lg bg-white text-blue-950 text-sm shadow-inner outline-none">
+                        <button onclick="addTask()" class="px-5 py-2 skeuo-btn text-xs md:text-sm">Добавить</button>
+                        <button onclick="saveTasksFile()" class="px-5 py-2 skeuo-btn text-xs md:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-arrow-down"></i> Скачать список задач
+                        </button>
+                    </div>
+
+                    <div class="bg-white border-2 border-blue-400 rounded-xl p-4 shadow-inner min-h-[250px]">
+                        <h4 class="font-bold text-blue-950 mb-3 text-sm border-b pb-2">Список ваших задач:</h4>
+                        <ul id="taskList" class="space-y-2">
+                            <!-- Задачи загружаются из localStorage -->
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Страница техподдержки -->
+        <section id="page-support" class="hidden space-y-6">
+            <div class="border-b-2 border-blue-300 pb-3">
+                <h2 class="text-2xl font-bold text-blue-950 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Техническая поддержка</h2>
+                <p class="text-blue-800 text-sm font-medium">Свяжитесь с администрацией СНУ Сергинское</p>
+            </div>
+
+            <div class="skeuo-box rounded-2xl shadow-xl p-8 max-w-xl mx-auto border-2 border-blue-400 text-center space-y-6">
+                <div class="w-16 h-16 bg-blue-100 border-2 border-blue-300 rounded-full flex items-center justify-center mx-auto text-blue-700 text-2xl shadow-inner">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-blue-950 text-lg font-medium">
+                        Все письма для техподдержки принимаются по адресу:
+                    </p>
+                    <a href="mailto:386sers@gmail.com" class="text-xl font-extrabold text-blue-700 hover:underline block">
+                        386sers@gmail.com
+                    </a>
+                </div>
+                <div class="pt-2">
+                    <a href="mailto:386sers@gmail.com" class="px-8 py-3 skeuo-btn text-base shadow-lg inline-flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Отправить сообщение техподдержке
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Подвал сайта со счетчиком дней -->
+    <footer class="skeuo-footer py-4 px-4 text-center text-blue-950 text-sm font-semibold shadow-inner mt-8">
+        <div class="max-w-6xl mx-auto flex justify-center items-center">
+            <span class="bg-[#e6f2fd] border border-[#7eaac7] px-6 py-1.5 rounded-full shadow-inner text-blue-950">
+                СНУ Сергинское &bull; Нам уже <span id="daysCounter" class="font-bold">3</span> дней
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        // Счетчик дней
+        function updateDaysCounter() {
+            const startDate = new Date(Date.UTC(2026, 7, 19, 0, 0, 0));
+            const now = new Date();
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const mskTime = new Date(utcTime + (3 * 3600000));
+            const mskMidnight = new Date(Date.UTC(mskTime.getFullYear(), mskTime.getMonth(), mskTime.getDate(), 0, 0, 0));
+            
+            const diffTime = mskMidnight - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const totalDays = 3 + (diffDays > 0 ? diffDays : 0);
+            
+            const counterEl = document.getElementById('daysCounter');
+            if (counterEl) counterEl.textContent = totalDays;
+            
+            const nextMidnight = new Date(Date.UTC(mskTime.getFullYear(), mskTime.getMonth(), mskTime.getDate() + 1, 0, 0, 0));
+            setTimeout(updateDaysCounter, nextMidnight.getTime() - mskTime.getTime() + 1000);
+        }
+        updateDaysCounter();
+
+        function switchPage(pageId) {
+            ['home', 'news', 'kids', 'adults', 'support'].forEach(id => {
+                const page = document.getElementById('page-' + id);
+                if (page) page.classList.add('hidden');
+                const navBtn = document.getElementById('nav-' + id);
+                if(navBtn) navBtn.className = "px-3 py-1.5 skeuo-btn-inactive text-xs md:text-sm";
+            });
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) targetPage.classList.remove('hidden');
+            const activeNav = document.getElementById('nav-' + pageId);
+            if(activeNav) activeNav.className = "px-3 py-1.5 skeuo-btn text-xs md:text-sm";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(pageId === 'kids') {
+                initPaint();
+            }
+        }
+
+        function toggleStreetsList() {
+            const dropdown = document.getElementById('streetsDropdown');
+            const arrow = document.getElementById('streetsArrow');
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                arrow.classList.add('rotate-90');
+            } else {
+                dropdown.classList.add('hidden');
+                arrow.classList.remove('rotate-90');
+            }
+        }
+
+
+        // ================= ИНСТРУМЕНТЫ ДЛЯ ВЗРОСЛЫХ (НЕ 18+) =================
+        function openAdultTool(toolName) {
+            document.getElementById('tool-calc').classList.add('hidden');
+            document.getElementById('tool-tasks').classList.add('hidden');
+
+            const menu = document.getElementById('adultsMenu').children;
+            menu[0].className = toolName === 'calc' ? 'px-4 py-2 skeuo-btn text-xs md:text-sm' : 'px-4 py-2 skeuo-btn-inactive text-xs md:text-sm';
+            menu[1].className = toolName === 'tasks' ? 'px-4 py-2 skeuo-btn text-xs md:text-sm' : 'px-4 py-2 skeuo-btn-inactive text-xs md:text-sm';
+
+            if(toolName === 'calc') {
+                document.getElementById('tool-calc').classList.remove('hidden');
+            } else if(toolName === 'tasks') {
+                document.getElementById('tool-tasks').classList.remove('hidden');
+                loadTasks();
+            }
+        }
+
+        // Логика калькулятора
+        let calcExpression = "0";
+        function calcDisplayUpdate() {
+            document.getElementById('calcDisplay').textContent = calcExpression;
+        }
+        function calcClear() {
+            calcExpression = "0";
+            calcDisplayUpdate();
+        }
+        function calcAppend(val) {
+            if(calcExpression === "0" && !isNaN(val)) {
+                calcExpression = val;
+            } else {
+                calcExpression += val;
+            }
+            calcDisplayUpdate();
+        }
+        function calcCalculate() {
+            try {
+                calcExpression = eval(calcExpression).toString();
+            } catch(e) {
+                calcExpression = "Ошибка";
+            }
+            calcDisplayUpdate();
+            setTimeout(() => { if(calcExpression === "Ошибка") calcClear(); }, 1500);
+        }
+
+        // Логика планировщика задач с LocalStorage и сохранением в TXT
+        function getTasks() {
+            const saved = localStorage.getItem('snu_tasks');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveTasksToStorage(tasks) {
+            localStorage.setItem('snu_tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const tasks = getTasks();
+            const listEl = document.getElementById('taskList');
+            listEl.innerHTML = '';
+            if(tasks.length === 0) {
+                listEl.innerHTML = '<li class="text-gray-500 text-xs italic">Список задач пока пуст.</li>';
+                return;
+            }
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.className = "flex items-center justify-between bg-white px-3 py-2 rounded border border-blue-200 text-sm shadow-xs";
+                li.innerHTML = `
+                    <span class="${task.completed ? 'line-through text-gray-400' : 'text-blue-950'}">${task.text}</span>
+                    <div class="flex gap-2">
+                        <button onclick="toggleTask(${index})" class="text-xs px-2 py-1 ${task.completed ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'} rounded border">${task.completed ? 'Вернуть' : 'Выполнено'}</button>
+                        <button onclick="deleteTask(${index})" class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded border">Удалить</button>
+                    </div>
+                `;
+                listEl.appendChild(li);
+            });
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+            if(!text) return;
+            const tasks = getTasks();
+            tasks.push({ text: text, completed: false });
+            saveTasksToStorage(tasks);
+            input.value = '';
+            loadTasks();
+        }
+
+        function toggleTask(index) {
+            const tasks = getTasks();
+            tasks[index].completed = !tasks[index].completed;
+            saveTasksToStorage(tasks);
+            loadTasks();
+        }
+
+        function deleteTask(index) {
+            const tasks = getTasks();
+            tasks.splice(index, 1);
+            saveTasksToStorage(tasks);
+            loadTasks();
+        }
+
+        function saveTasksFile() {
+            const tasks = getTasks();
+            if(tasks.length === 0) {
+                alert('Список задач пуст, нечего сохранять!');
+                return;
+            }
+            let fileContent = "=== СПИСОК ЗАДАЧ СНУ СЕРГИНСКОЕ ===\r\n\r\n";
+            tasks.forEach((t, i) => {
+                fileContent += `${i + 1}. [${t.completed ? 'Х' : ' '}] ${t.text}\r\n`;
+            });
+
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'zadachi-snu.txt';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+
+        // ================= МИНИ-ИГРА 1: РИСОВАЛКА =================
+        const paintCanvas = document.getElementById('paintCanvas');
+        const paintCtx = paintCanvas.getContext('2d');
+        let isPainting = false;
+        let paintTool = 'brush';
+
+        function initPaint() {
+            if(!paintCanvas.dataset.inited) {
+                paintCtx.fillStyle = '#ffffff';
+                paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
+                paintCanvas.dataset.inited = 'true';
+            }
+        }
+
+        function setPaintTool(tool) {
+            paintTool = tool;
+            document.getElementById('toolBrush').className = tool === 'brush' ? 'px-3 py-1 skeuo-btn text-xs' : 'px-3 py-1 skeuo-btn-inactive text-xs';
+            document.getElementById('toolEraser').className = tool === 'eraser' ? 'px-3 py-1 skeuo-btn text-xs' : 'px-3 py-1 skeuo-btn-inactive text-xs';
+        }
+
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: (evt.clientX - rect.left) * scaleX,
+                y: (evt.clientY - rect.top) * scaleY
+            };
+        }
+
+        paintCanvas.addEventListener('mousedown', (e) => { isPainting = true; drawPaint(e); });
+        paintCanvas.addEventListener('mousemove', (e) => { if (isPainting) drawPaint(e); });
+        window.addEventListener('mouseup', () => { isPainting = false; paintCtx.beginPath(); });
+
+        paintCanvas.addEventListener('touchstart', (e) => { isPainting = true; drawPaint(e.touches[0]); e.preventDefault(); });
+        paintCanvas.addEventListener('touchmove', (e) => { if (isPainting) drawPaint(e.touches[0]); e.preventDefault(); });
+        window.addEventListener('touchend', () => { isPainting = false; paintCtx.beginPath(); });
+
+        function drawPaint(e) {
+            const pos = getMousePos(paintCanvas, e);
+            paintCtx.lineWidth = document.getElementById('paintSize').value;
+            paintCtx.lineCap = 'round';
+            paintCtx.lineJoin = 'round';
+
+            if (paintTool === 'eraser') {
+                paintCtx.strokeStyle = '#ffffff';
+            } else {
+                paintCtx.strokeStyle = document.getElementById('paintColor').value;
+            }
+
+            paintCtx.lineTo(pos.x, pos.y);
+            paintCtx.stroke();
+            paintCtx.beginPath();
+            paintCtx.moveTo(pos.x, pos.y);
+        }
+
+        function savePaint() {
+            const link = document.createElement('a');
+            link.download = 'risunok-snu.png';
+            link.href = paintCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+
+        // ================= МИНИ-ИГРА 2: ЗМЕЙКА =================
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const snakeCtx = snakeCanvas.getContext('2d');
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 5, y: 5};
+        let dx = 1;
+        let dy = 0;
+        let snakeScore = 0;
+        let snakeInterval = null;
+
+        function startSnake() {
+            snake = [{x: 10, y: 10}];
+            dx = 1; dy = 0;
+            snakeScore = 0;
+            document.getElementById('snakeScore').textContent = snakeScore;
+            spawnFood();
+            if(snakeInterval) clearInterval(snakeInterval);
+            snakeInterval = setInterval(updateSnake, 100);
+        }
+
+        function spawnFood() {
+            food = {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
+        }
+
+        function updateSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            
+            if(head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
+                clearInterval(snakeInterval);
+                alert('Игра окончена! Ваш счет: ' + snakeScore);
+                return;
+            }
+
+            for(let i=0; i<snake.length; i++) {
+                if(head.x === snake[i].x && head.y === snake[i].y) {
+                    clearInterval(snakeInterval);
+                    alert('Игра окончена! Ваш счет: ' + snakeScore);
+                    return;
+                }
+            }
+
+            snake.unshift(head);
+
+            if(head.x === food.x && head.y === food.y) {
+                snakeScore += 10;
+                document.getElementById('snakeScore').textContent = snakeScore;
+                spawnFood();
+            } else {
+                snake.pop();
+            }
+
+            snakeCtx.fillStyle = '#000000';
+            snakeCtx.fillRect(0, 0, 400, 400);
+
+            snakeCtx.fillStyle = '#ff3333';
+            snakeCtx.fillRect(food.x * 20, food.y * 20, 18, 18);
+
+            snakeCtx.fillStyle = '#2b7ee4';
+            snake.forEach(part => {
+                snakeCtx.fillRect(part.x * 20, part.y * 20, 18, 18);
+            });
+        }
+
+        window.addEventListener('keydown', e => {
+            if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+            if(e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -1; }
+            if(e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 1; }
+            if(e.key === 'ArrowLeft' && dx === 0) { dx = -1; dy = 0; }
+            if(e.key === 'ArrowRight' && dx === 0) { dx = 1; dy = 0; }
+        });
+
+
+        // ================= МИНИ-ИГРА 3: РАСКРАСКА =================
+        const coloringCanvas = document.getElementById('coloringCanvas');
+        const coloringCtx = coloringCanvas.getContext('2d');
+        let currentFigure = 1;
+        let isColoring = false;
+
+        function selectColoring(figNum) {
+            currentFigure = figNum;
+            for(let i=1; i<=3; i++) {
+                const btn = document.getElementById('coloringMenu').children[i-1];
+                btn.className = i === figNum ? 'px-4 py-2 skeuo-btn text-xs' : 'px-4 py-2 skeuo-btn-inactive text-xs';
+            }
+            drawColoringTemplate();
+        }
+
+        function drawColoringTemplate() {
+            coloringCtx.fillStyle = '#ffffff';
+            coloringCtx.fillRect(0, 0, coloringCanvas.width, coloringCanvas.height);
+
+            coloringCtx.lineWidth = 4;
+            coloringCtx.strokeStyle = '#1a365d';
+
+            if(currentFigure === 1) {
+                coloringCtx.fillStyle = 'rgba(200, 220, 255, 0.4)';
+                coloringCtx.fillRect(175, 120, 150, 180);
+                coloringCtx.fillRect(200, 40, 100, 70);
+
+                coloringCtx.strokeRect(175, 120, 150, 180);
+                coloringCtx.strokeRect(200, 40, 100, 70);
+
+                coloringCtx.fillStyle = '#1a365d';
+                coloringCtx.fillRect(220, 60, 20, 20);
+                coloringCtx.fillRect(260, 60, 20, 20);
+            } else if(currentFigure === 2) {
+                coloringCtx.fillStyle = 'rgba(255, 220, 200, 0.4)';
+                coloringCtx.fillRect(150, 180, 200, 170);
+                coloringCtx.strokeRect(150, 180, 200, 170);
+
+                coloringCtx.beginPath();
+                coloringCtx.moveTo(130, 180);
+                coloringCtx.lineTo(250, 80);
+                coloringCtx.lineTo(370, 180);
+                coloringCtx.closePath();
+                coloringCtx.fillStyle = 'rgba(255, 150, 150, 0.4)';
+                coloringCtx.fill();
+                coloringCtx.stroke();
+            } else {
+                coloringCtx.fillStyle = 'rgba(150, 220, 255, 0.4)';
+                coloringCtx.fillRect(120, 200, 260, 90);
+                coloringCtx.strokeRect(120, 200, 260, 90);
+
+                coloringCtx.fillRect(180, 130, 140, 70);
+                coloringCtx.strokeRect(180, 130, 140, 70);
+
+                coloringCtx.beginPath();
+                coloringCtx.arc(170, 290, 30, 0, Math.PI*2);
+                coloringCtx.arc(330, 290, 30, 0, Math.PI*2);
+                coloringCtx.fillStyle = '#333';
+                coloringCtx.fill();
+                coloringCtx.stroke();
+            }
+        }
+
+        coloringCanvas.addEventListener('mousedown', (e) => { isColoring = true; colorArea(e); });
+        coloringCanvas.addEventListener('mousemove', (e) => { if(isColoring) colorArea(e); });
+        window.addEventListener('mouseup', () => { isColoring = false; });
+
+        coloringCanvas.addEventListener('touchstart', (e) => { isColoring = true; colorArea(e.touches[0]); e.preventDefault(); });
+        coloringCanvas.addEventListener('touchmove', (e) => { if(isColoring) colorArea(e.touches[0]); e.preventDefault(); });
+        window.addEventListener('touchend', () => { isColoring = false; });
+
+        function colorArea(e) {
+            const pos = getMousePos(coloringCanvas, e);
+            coloringCtx.fillStyle = document.getElementById('colorPicker').value;
+            coloringCtx.beginPath();
+            coloringCtx.arc(pos.x, pos.y, 18, 0, Math.PI * 2);
+            coloringCtx.fill();
+            drawColoringTemplateOverlays();
+        }
+
+        function drawColoringTemplateOverlays() {
+            coloringCtx.lineWidth = 4;
+            coloringCtx.strokeStyle = '#1a365d';
+            if(currentFigure === 1) {
+                coloringCtx.strokeRect(175, 120, 150, 180);
+                coloringCtx.strokeRect(200, 40, 100, 70);
+                coloringCtx.fillStyle = '#1a365d';
+                coloringCtx.fillRect(220, 60, 20, 20);
+                coloringCtx.fillRect(260, 60, 20, 20);
+            } else if(currentFigure === 2) {
+                coloringCtx.strokeRect(150, 180, 200, 170);
+                coloringCtx.beginPath();
+                coloringCtx.moveTo(130, 180);
+                coloringCtx.lineTo(250, 80);
+                coloringCtx.lineTo(370, 180);
+                coloringCtx.closePath();
+                coloringCtx.stroke();
+            } else {
+                coloringCtx.strokeRect(120, 200, 260, 90);
+                coloringCtx.strokeRect(180, 130, 140, 70);
+                coloringCtx.beginPath();
+                coloringCtx.arc(170, 290, 30, 0, Math.PI*2);
+                coloringCtx.arc(330, 290, 30, 0, Math.PI*2);
+                coloringCtx.stroke();
+            }
+        }
+
+        function saveColoring() {
+            const link = document.createElement('a');
+            link.download = 'raskraska-snu.png';
+            link.href = coloringCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function openMiniGame(gameName) {
+            document.getElementById('game-paint').classList.add('hidden');
+            document.getElementById('game-snake').classList.add('hidden');
+            document.getElementById('game-coloring').classList.add('hidden');
+
+            const menu = document.getElementById('kidsMenu').children;
+            menu[0].className = gameName === 'paint' ? 'px-4 py-2 skeuo-btn text-xs md:text-sm' : 'px-4 py-2 skeuo-btn-inactive text-xs md:text-sm';
+            menu[1].className = gameName === 'snake' ? 'px-4 py-2 skeuo-btn text-xs md:text-sm' : 'px-4 py-2 skeuo-btn-inactive text-xs md:text-sm';
+            menu[2].className = gameName === 'coloring' ? 'px-4 py-2 skeuo-btn text-xs md:text-sm' : 'px-4 py-2 skeuo-btn-inactive text-xs md:text-sm';
+
+            if(gameName === 'paint') {
+                document.getElementById('game-paint').classList.remove('hidden');
+                initPaint();
+            } else if(gameName === 'snake') {
+                document.getElementById('game-snake').classList.remove('hidden');
+                startSnake();
+            } else if(gameName === 'coloring') {
+                document.getElementById('game-coloring').classList.remove('hidden');
+                selectColoring(1);
+            }
+        }
+
+
+        // Плеер
+        const video = document.getElementById('customVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playPauseIcon = document.getElementById('playPauseIcon');
+        const bigPlayBtn = document.getElementById('bigPlayBtn');
+        const videoProgress = document.getElementById('videoProgress');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const muteBtn = document.getElementById('muteBtn');
+        const muteIcon = document.getElementById('muteIcon');
+        const volumeBar = document.getElementById('volumeBar');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        function updateRangeBackground(rangeInput) {
+            const value = ((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min)) * 100;
+            rangeInput.style.background = `linear-gradient(to right, #2b7ee4 0%, #2b7ee4 ${value}%, #111a2e ${value}%, #111a2e 100%)`;
+        }
+
+        function togglePlay() {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        bigPlayBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+
+        video.addEventListener('play', () => {
+            playPauseIcon.className = "fa-solid fa-pause text-base";
+            bigPlayBtn.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        video.addEventListener('pause', () => {
+            playPauseIcon.className = "fa-solid fa-play text-base";
+            bigPlayBtn.classList.remove('opacity-0', 'pointer-events-none');
+        });
+
+        video.addEventListener('timeupdate', () => {
+            if (!video.duration) return;
+            const percentage = (video.currentTime / video.duration) * 100;
+            videoProgress.value = percentage;
+            updateRangeBackground(videoProgress);
+            timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+        });
+
+        videoProgress.addEventListener('input', () => {
+            if (video.duration && !isNaN(video.duration)) {
+                const time = (videoProgress.value / 100) * video.duration;
+                video.currentTime = time;
+            }
+            updateRangeBackground(videoProgress);
+        });
+
+        volumeBar.addEventListener('input', () => {
+            video.volume = volumeBar.value;
+            video.muted = (video.volume === 0);
+            updateMuteIcon();
+            updateRangeBackground(volumeBar);
+        });
+
+        muteBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+            updateMuteIcon();
+        });
+
+        function updateMuteIcon() {
+            if (video.muted || video.volume === 0) {
+                muteIcon.className = "fa-solid fa-volume-xmark";
+                volumeBar.value = 0;
+            } else {
+                muteIcon.className = "fa-solid fa-volume-high";
+                volumeBar.value = video.volume;
+            }
+            updateRangeBackground(volumeBar);
+        }
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            }
+        });
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        video.addEventListener('loadedmetadata', () => {
+            timeDisplay.textContent = "0:00 / " + formatTime(video.duration);
+            updateRangeBackground(videoProgress);
+            updateRangeBackground(volumeBar);
+        });
+
+        updateRangeBackground(videoProgress);
+        updateRangeBackground(volumeBar);
+    </script>
+</body>
+</html>
